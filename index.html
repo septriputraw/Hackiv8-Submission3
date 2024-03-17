@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5">
+    <title>Status Air dan Angin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Status Air dan Angin</h1>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function fetchData() {
+            fetch('status.json')
+                .then(response => response.json())
+                .then(data => {
+                    const statusElement = document.getElementById('status');
+                    statusElement.innerHTML = `
+                        <h2>Water: ${data.status.water.value}m (${data.status.water.status})</h2>
+                        <h2>Wind: ${data.status.wind.value}m/s (${data.status.wind.status})</h2>
+                    `;
+                });
+        }
+
+        // Fetch data saat halaman dimuat
+        fetchData(); 
+
+        // Auto refresh setiap 15 detik
+        setInterval(fetchData, 15000); 
+    </script>
+</body>
+
+</html>
